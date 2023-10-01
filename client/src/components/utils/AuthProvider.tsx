@@ -83,8 +83,6 @@ export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
             returnJSON: false
         })
 
-        console.log("RES? login ->", res)
-
         //Se lo status è OK (200-299) allora res è true (login effettuato con successo)
         //Altrimenti, res è false (login fallito)
         return res
@@ -107,8 +105,6 @@ export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
             credentials: true,
             returnJSON: false
         })
-
-        console.log("OK?: ", res)
 
         if (!res) {
             logout()
@@ -154,6 +150,7 @@ export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
     }
 
     /**
+     * (cookies, login, logout, checkAuth, navigateProtected --- sono tutte le funzioni che vengono inserite nell'auth e passate ai componenti figli)
      * auth è un oggetto che contiene le funzioni di: 
      * - cookie di sessione (access_token)
      * - {@link AuthProvider.login} 
