@@ -30,6 +30,13 @@ const formColumnStyle: CSSProperties = {
     gap: '2rem'
 }
 
+/**
+ * @description
+ * Aggiunge i giorni alla data. 
+ * @param date La data
+ * @param days Il numero di giorni da aggiungere
+ * @returns La data aggiornata
+ */
 const addDays = (date: Date, days: number) => {
     const result = new Date(date)
     result.setDate(result.getDate() + days)
@@ -52,10 +59,14 @@ export const CreateBooking = (): JSX.Element => {
 
     const [startDate, setStartDate] = useState<Date>(new Date(Date.now()))
     const [endDate, setEndDate] = useState<Date>(new Date(addDays(startDate!, 1)))
+
+    //1000: da millisecondi a secondi
+    //3600: da secondi a ore
+    //24: da ore a giorni
     const numDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24))
 
-    //Bookings.tsx --> CreateBooking.tsx
-    //I dati trasferiti attraverso la funzione navigate() sono contenuti in state
+    //Es: Bookings.tsx --> CreateBooking.tsx
+    //I dati trasferiti attraverso la funzione navigate() sono contenuti in state. (trasferimento dati tra routes)
     const location = useLocation()
     const state = location.state as SunshadeType
 
@@ -99,6 +110,13 @@ export const CreateBooking = (): JSX.Element => {
         navigate('/visualizza-prenotazioni')
     }
 
+    /**
+     * @description
+     * Se l'utente seleziona un ombrellone dalla griglia allora viene settata la variabile di stato (sunshade). \
+     * Altrimenti se l'utente è arrivato alla pagina senza selezionare un ombrellone, viene reindirizzato alla pagina di visualizzazione delle prenotazioni.
+     * 
+     */
+
     useEffect(() => {
         if (state) {
             setSunshade(state)
@@ -128,7 +146,7 @@ export const CreateBooking = (): JSX.Element => {
                                     //conditional rendering: se sunshade è definito, visualizza i campi per creare la prenotazione
                                     sunshade ? (
                                         <>
-                                            <CustomNumericField
+                                            <CustomNumericField //textfield
                                                 label="Numero di righe"
                                                 value={sunshade!.num_row}
                                                 onChange={(e) => setSunshade({ ...sunshade!, num_row: Number.parseInt(e.target.value) })}
@@ -176,7 +194,7 @@ export const CreateBooking = (): JSX.Element => {
                                                 onChange={(e) => setSunshade({ ...sunshade!, num_sunbeds: Number.parseInt(e.target.value) })}
                                                 minValue={0}
                                             />
-                                            <CheckoutTable
+                                            <CheckoutTable  //tabella con nome, prezzo, quantità e totale. 
                                                 sunshade={sunshade}
                                                 numDays={numDays}
                                             />
