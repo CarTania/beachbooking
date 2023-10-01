@@ -8,12 +8,20 @@ import { flexColumnStyle } from "../../components/utils/CustomStyles"
 import { useAuth } from "../../components/utils/AuthProvider"
 import { useNavigate } from "react-router-dom"
 
+/**
+ * @description
+ * Struttura la landing Page in una colonna. 
+ */
 const containerStyle: CSSProperties = {
     ...flexColumnStyle,
     gap: "2rem",
     padding: "35px"
 }
 
+/**
+ * @description
+ * Struttura la card in una colonna. 
+ */
 const cardStyle: CSSProperties = {
     ...flexColumnStyle,
     borderRadius: "2rem"
@@ -50,7 +58,7 @@ export const LandingPage = (): JSX.Element => {
         //Access token dell'utente (se presente)
         const access_token = auth.cookies.get("access_token")
 
-        if (access_token !== undefined) {
+        if (access_token) {
             //Se l'access_token è presente, controlla se è valido
             //esempio: sono loggato, ma il token è scaduto
             auth.checkAuth()
@@ -66,6 +74,11 @@ export const LandingPage = (): JSX.Element => {
         setOpen(!open)
     }
 
+    /**
+     * @description
+     * Il custom modal contiene l'authform. 
+     * Il resto è una card.
+     */
     return (
         <>
             <CustomModal open={open} setOpen={toggleModal}>

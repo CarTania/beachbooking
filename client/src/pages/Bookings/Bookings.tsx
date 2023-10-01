@@ -53,12 +53,6 @@ export const Bookings = (): JSX.Element => {
             })
     }
 
-    //teoria: useEffect viene eseguito dopo che il componente è stato renderizzato
-    //In questo caso, viene eseguito solo una volta, quando il componente viene renderizzato per la prima volta
-    useEffect(() => {
-        GetSortedSunshades()
-    }, [])
-
     const handleDeleteBooking = (sunshade: SunshadeType) => {
         DeleteBooking(sunshade).then((ok) => {
             //Se lo status è OK (200-299) allora la prenotazione è stata eliminata con successo
@@ -77,6 +71,12 @@ export const Bookings = (): JSX.Element => {
         })
     }
 
+    //teoria: useEffect viene eseguito dopo che il componente è stato renderizzato
+    //In questo caso, viene eseguito quando viene eliminata una prenotazione
+    useEffect(() => {
+        GetSortedSunshades()
+    }, [handleDeleteBooking])
+
     /**
      * @description
      * Chiude il messaggio di successo o errore della snackbar e visualizza nuovamente la lista di ombrelloni aggiornata
@@ -84,10 +84,6 @@ export const Bookings = (): JSX.Element => {
      */
     const handleClose = (): void => {
         setOpen(false)
-        if (snackbarInfo.severity === "success") {
-            GetSortedSunshades()
-            renderSunshades()
-        }
     }
 
     /**
