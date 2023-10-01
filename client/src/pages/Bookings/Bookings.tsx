@@ -130,12 +130,16 @@ export const Bookings = (): JSX.Element => {
             )
         }
 
+        /**
+         * @description
+         * Ritorna la lista di ombrelloni [è obbligatorio utilizzare una chiave univoca per la funzione map]
+         */
         return sunshades.map((sunshade) => (
             <Tooltip sx={flexRowStyle} key={sunshade.sunshade_id} title={renderTooltipTitle(sunshade)} placement="bottom">
                 <ImageListItem>
                     <Sunshade
-                        available={sunshade.booking_id === null}
-                        handleBooking={() => { auth.navigateProtected('/crea-prenotazione', { state: sunshade }) }}
+                        available={sunshade.booking_id === null} //se l'ombrellone è disponibile
+                        handleBooking={() => { auth.navigateProtected('/crea-prenotazione', { state: sunshade }) }} //va alla pagina di creazione della prenotazione portandosi dietro il valore dell'ombrellone.
                         data={sunshade}
                     />
                 </ImageListItem>
