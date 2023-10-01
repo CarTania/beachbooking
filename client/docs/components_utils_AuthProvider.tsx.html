@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>components/utils/AuthProvider.tsx - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AuthForm.html">AuthForm</a><ul class='methods'><li data-type='method'><a href="AuthForm.html#.isEmailValid">isEmailValid</a></li><li data-type='method'><a href="AuthForm.html#~isPasswordValid">isPasswordValid</a></li></ul></li><li><a href="AuthForm.AuthFormProps.html">AuthFormProps</a></li><li><a href="AuthProvider.html">AuthProvider</a><ul class='methods'><li data-type='method'><a href="AuthProvider.html#.navigateProtected">navigateProtected</a></li></ul></li><li><a href="AuthProvider.AuthContextType.html">AuthContextType</a></li><li><a href="AuthProvider.AuthProviderProps.html">AuthProviderProps</a></li><li><a href="AuthProvider.useAuth.html">useAuth</a></li><li><a href="Bookings.html">Bookings</a><ul class='methods'><li data-type='method'><a href="Bookings.html#.renderSunshades">renderSunshades</a></li><li data-type='method'><a href="Bookings.html#~handleClose">handleClose</a></li></ul></li><li><a href="BrowserRouter.html">BrowserRouter</a></li><li><a href="CheckoutTable.html">CheckoutTable</a></li><li><a href="CreateBooking.html">CreateBooking</a><ul class='methods'><li data-type='method'><a href="CreateBooking.html#.handleBooking">handleBooking</a></li><li data-type='method'><a href="CreateBooking.html#.handleClose">handleClose</a></li></ul></li><li><a href="CustomAppBar.html">CustomAppBar</a></li><li><a href="CustomAppBar.CustomAppBarProps.html">CustomAppBarProps</a></li><li><a href="CustomModal.html">CustomModal</a><ul class='methods'><li data-type='method'><a href="CustomModal.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="CustomModal.CustomModalProps.html">CustomModalProps</a></li><li><a href="CustomNumericField.html">CustomNumericField</a></li><li><a href="CustomThemeProvider.html">CustomThemeProvider</a></li><li><a href="ErrorPage.html">ErrorPage</a><ul class='methods'><li data-type='method'><a href="ErrorPage.html#.showErrorMessage">showErrorMessage</a></li></ul></li><li><a href="ErrorPage.ErrorPageProps.html">ErrorPageProps</a></li><li><a href="LandingPage.html">LandingPage</a><ul class='methods'><li data-type='method'><a href="LandingPage.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="Layout.html">Layout</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="Routes.html">Routes</a></li><li><a href="Routes.ProtectedRoutes.html">ProtectedRoutes</a></li><li><a href="Routes.PublicRoutes.html">PublicRoutes</a></li><li><a href="SendRequest.html">SendRequest</a></li><li><a href="SendRequest.GetSunshades.html">GetSunshades</a></li><li><a href="SendRequest.InsertBooking.html">InsertBooking</a></li><li><a href="SendRequest.SendRequestProps.html">SendRequestProps</a></li><li><a href="Sunshade.html">Sunshade</a><ul class='methods'><li data-type='method'><a href="Sunshade.html#.handleBooking">handleBooking</a></li></ul></li><li><a href="Sunshade.SunshadeProps.html">SunshadeProps</a></li><li><a href="Sunshade.SunshadeType.html">SunshadeType</a></li><li><a href="flexStyle.html">flexStyle</a></li><li><a href="flexStyle.flexColumnStyle.html">flexColumnStyle</a></li><li><a href="flexStyle.flexRowStyle.html">flexRowStyle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#CustomSnackbar">CustomSnackbar</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">components/utils/AuthProvider.tsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { ReactNode, createContext, useContext, useMemo } from "react"
+import { SendRequest } from "../helpers/Api";
+import Cookies from "universal-cookie";
+import { NavigateOptions, useNavigate } from "react-router-dom";
+
+/**
+ * @description
+ * L'oggetto che contiene le funzioni di autenticazione 
+ * @namespace AuthProvider.AuthContextType
+ */
+export type AuthContextType = {
+    cookies: Cookies,
+    login: (email: string, password: string) => Promise&lt;boolean>,
+    logout: () => Promise&lt;void>,
+    checkAuth: () => Promise&lt;boolean>,
+    navigateProtected: (path: string, options?: NavigateOptions) => void
+}
+
+const defaultAuthContext: AuthContextType = {
+    cookies: new Cookies({ path: '/' }, { secure: true }),
+    login: () => Promise.resolve(false),
+    logout: () => Promise.resolve(),
+    checkAuth: () => Promise.resolve(false),
+    navigateProtected: () => { }
+};
+
+/**
+ * @description
+ * Il context provider che contiene le funzioni di autenticazione
+ * @see https://react.dev/reference/react/createContext
+ */
+export const AuthContext = createContext&lt;AuthContextType>(defaultAuthContext);
+
+/**
+ * @description
+ * Le props di AuthProvider
+ * @namespace AuthProvider.AuthProviderProps
+ */
+interface AuthProviderProps {
+    children: ReactNode | ReactNode[]
+}
+
+/**
+ * @namespace AuthProvider
+ * @description
+ * AuthProvider gestisce le funzioni di:
+ * - {@link AuthProvider.login}
+ * - {@link AuthProvider.logout}
+ * - {@link AuthProvider.checkAuth}
+ * - {@link AuthProvider.navigateProtected}
+ * @example 
+ * &lt;AuthProvider>
+ *  &lt;App />
+ * &lt;/AuthProvider>
+ * @see https://react.dev/reference/react/createContext#provider
+ * @param {AuthProvider.AuthProviderProps} props Le funzioni di autenticazione
+ * @returns {JSX.Element} Context provider per le funzioni di autenticazione
+ */
+export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
+
+    //Accede ai cookie inviati dal server
+    const cookies = new Cookies({ path: '/' }, { secure: true })
+
+    /**
+     * @description
+     * Gestisce il login dell'utente e restituisce un booleano
+     * @param {string} email L'email dell'utente
+     * @param {string} password La password dell'utente
+     * @returns {Promise&lt;boolean>} true se il login è andato a buon fine, altrimenti false
+     * @memberof AuthProvider
+     */
+    const login = async (email: string, password: string): Promise&lt;boolean> => {
+        const res = await SendRequest({
+            url: '/api/auth',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            }),
+            returnJSON: false
+        })
+
+        console.log("RES? login ->", res)
+
+        //Se lo status è OK (200-299) allora res è true (login effettuato con successo)
+        //Altrimenti, res è false (login fallito)
+        return res
+    };
+
+    /**
+     * @description
+     * Controlla se l'utente è autenticato e restituisce un booleano.
+     * Se l'utente non è autenticato, effettua il logout.
+     * @returns {Promise&lt;boolean>}
+     * @memberof AuthProvider
+     */
+    const checkAuth = async (): Promise&lt;boolean> => {
+        const res = await SendRequest({
+            url: '/api/protected',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: true,
+            returnJSON: false
+        })
+
+        console.log("OK?: ", res)
+
+        if (!res) {
+            logout()
+            return false
+        }
+
+        return true
+    }
+
+    /**
+     * Effettua il logout dell'utente
+     * @returns {Promise&lt;void>}
+     * @memberof AuthProvider
+     */
+    const logout = async (): Promise&lt;void> => {
+        await SendRequest({
+            url: '/api/logout',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            returnJSON: false
+        })
+    };
+
+    //Hook di React Router per la navigazione tra le pagine
+    const navigate = useNavigate()
+
+    /**
+     * Effettua la navigazione protetta. \
+     * Se l'utente è autenticato, naviga alla pagina specificata, altrimenti naviga alla LandingPage
+     * @see {@link AuthProvider.checkAuth}
+     * @param {string} path La pagina da visualizzare
+     * @param {NavigateOptions} options Le opzioni di navigazione
+     * @returns {void} 
+     * @memberof AuthProvider
+     */
+    const navigateProtected = (path: string, options?: NavigateOptions): void => {
+        checkAuth()
+            .then((result) => {
+                navigate(result ? path : '/', options)
+            })
+    }
+
+    /**
+     * auth è un oggetto che contiene le funzioni di: 
+     * - cookie di sessione (access_token)
+     * - {@link AuthProvider.login} 
+     * - {@link AuthProvider.logout} 
+     * - {@link AuthProvider.checkAuth} 
+     * - {@link AuthProvider.navigateProtected}
+     * @see https://react.dev/reference/react/useMemo
+     * @return {AuthProvider.AuthContextType}
+     * @memberof AuthProvider
+     */
+    const auth = useMemo(
+        () => ({
+            cookies,
+            login,
+            logout,
+            checkAuth,
+            navigateProtected
+        }),
+        [cookies, login, logout, checkAuth, navigateProtected]
+    );
+
+    return (
+        &lt;AuthContext.Provider value={auth}>
+            {props.children}
+        &lt;/AuthContext.Provider>
+    )
+};
+
+/**
+ * useAuth è un hook che restituisce l'oggetto {@link AuthProvider.auth} di {@link AuthProvider}. \
+ * Permette ai componenti di accedere alle funzioni specificate in {@link AuthProvider.AuthContextType}
+ * @see https://react.dev/reference/react/useContext
+ * @returns {AuthContextType} L'oggetto auth di AuthProvider
+ * @namespace AuthProvider.useAuth
+ */
+export const useAuth = (): AuthContextType => {
+    return useContext(AuthContext)
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 18:26:01 GMT+0200 (Ora legale dell’Europa centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

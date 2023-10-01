@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>pages/Bookings/Sunshade.tsx - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AuthForm.html">AuthForm</a><ul class='methods'><li data-type='method'><a href="AuthForm.html#.isEmailValid">isEmailValid</a></li><li data-type='method'><a href="AuthForm.html#~isPasswordValid">isPasswordValid</a></li></ul></li><li><a href="AuthForm.AuthFormProps.html">AuthFormProps</a></li><li><a href="AuthProvider.html">AuthProvider</a><ul class='methods'><li data-type='method'><a href="AuthProvider.html#.navigateProtected">navigateProtected</a></li></ul></li><li><a href="AuthProvider.AuthContextType.html">AuthContextType</a></li><li><a href="AuthProvider.AuthProviderProps.html">AuthProviderProps</a></li><li><a href="AuthProvider.useAuth.html">useAuth</a></li><li><a href="Bookings.html">Bookings</a><ul class='methods'><li data-type='method'><a href="Bookings.html#.renderSunshades">renderSunshades</a></li><li data-type='method'><a href="Bookings.html#~handleClose">handleClose</a></li></ul></li><li><a href="BrowserRouter.html">BrowserRouter</a></li><li><a href="CheckoutTable.html">CheckoutTable</a></li><li><a href="CreateBooking.html">CreateBooking</a><ul class='methods'><li data-type='method'><a href="CreateBooking.html#.handleBooking">handleBooking</a></li><li data-type='method'><a href="CreateBooking.html#.handleClose">handleClose</a></li></ul></li><li><a href="CustomAppBar.html">CustomAppBar</a></li><li><a href="CustomAppBar.CustomAppBarProps.html">CustomAppBarProps</a></li><li><a href="CustomModal.html">CustomModal</a><ul class='methods'><li data-type='method'><a href="CustomModal.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="CustomModal.CustomModalProps.html">CustomModalProps</a></li><li><a href="CustomNumericField.html">CustomNumericField</a></li><li><a href="CustomThemeProvider.html">CustomThemeProvider</a></li><li><a href="ErrorPage.html">ErrorPage</a><ul class='methods'><li data-type='method'><a href="ErrorPage.html#.showErrorMessage">showErrorMessage</a></li></ul></li><li><a href="ErrorPage.ErrorPageProps.html">ErrorPageProps</a></li><li><a href="LandingPage.html">LandingPage</a><ul class='methods'><li data-type='method'><a href="LandingPage.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="Layout.html">Layout</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="Routes.html">Routes</a></li><li><a href="Routes.ProtectedRoutes.html">ProtectedRoutes</a></li><li><a href="Routes.PublicRoutes.html">PublicRoutes</a></li><li><a href="SendRequest.html">SendRequest</a></li><li><a href="SendRequest.GetSunshades.html">GetSunshades</a></li><li><a href="SendRequest.InsertBooking.html">InsertBooking</a></li><li><a href="SendRequest.SendRequestProps.html">SendRequestProps</a></li><li><a href="Sunshade.html">Sunshade</a><ul class='methods'><li data-type='method'><a href="Sunshade.html#.handleBooking">handleBooking</a></li></ul></li><li><a href="Sunshade.SunshadeProps.html">SunshadeProps</a></li><li><a href="Sunshade.SunshadeType.html">SunshadeType</a></li><li><a href="flexStyle.html">flexStyle</a></li><li><a href="flexStyle.flexColumnStyle.html">flexColumnStyle</a></li><li><a href="flexStyle.flexRowStyle.html">flexRowStyle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#CustomSnackbar">CustomSnackbar</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Bookings/Sunshade.tsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//Formato WebP per le immagini in quanto più leggero di JPG e PNG e supportato da tutti i browser moderni
+import denied from "/src/assets/Sunshade/denied.webp"
+import sunshade from "/src/assets/Sunshade/sunshade.webp"
+
+/**
+ * @description
+ * Le proprietà di un {@link Sunshade | ombrellone}
+ * @namespace Sunshade.SunshadeType
+ */
+export type SunshadeType = {
+    sunshade_id: number,
+    num_row: number,
+    num_column: number,
+    num_deckchairs: number,
+    num_sunbeds: number,
+    deckchair_price: number,
+    sunbed_price: number,
+    chalet_id: number,
+    booking_id: number,
+    price: number
+}
+
+/**
+ * @description
+ * I props di un {@link Sunshade | ombrellone}
+ * @namespace Sunshade.SunshadeProps
+ */
+interface SunshadeProps {
+    width?: number,
+    height?: number,
+    available: boolean,
+    handleBooking(): void,
+    data: SunshadeType
+}
+
+/**
+ * @namespace Sunshade
+ * @description
+ * La rappresentazione grafica di un ombrellone \
+ * Se l'ombrellone è disponibile, è possibile prenotarlo cliccando sull'immagine \
+ * Altrimenti, viene visualizzata un'immagine che indica che l'ombrellone è già prenotato.
+ * @see https://react.dev/learn/conditional-rendering#conditional-ternary-operator-- 
+ * @example 
+ * // Ombrellone disponibile
+ * &lt;Sunshade available={true} handleBooking={() => handleBooking()} />
+ * @param {Sunshade.SunshadeProps} props Se l'ombrellone è disponibile e la funzione per prenotarlo
+ * @returns {JSX.Element} La rappresentazione grafica di un ombrellone
+ */
+export const Sunshade: React.FC&lt;SunshadeProps> = (props: SunshadeProps): JSX.Element => {
+
+    const width = props.width || 125
+    const height = props.height || 125
+
+    const containerStyle = {
+        backgroundImage: `url(${sunshade})`, //Immagine dell'ombrellone disponibile
+        backgroundSize: 'cover',
+        width: width,
+        height: height
+    }
+
+    /**
+     * @description
+     * Se l'ombrellone è disponibile, viene chiamata la funzione {@link props.handleBooking} \
+     * La funzione handleBooking è passata come props.
+     * @see {@link Sunshade.SunshadeProps}
+     * @see https://react.dev/learn/conditional-rendering#conditional-ternary-operator--
+     * @returns {false | void} false se l'ombrellone non è disponibile, altrimenti void
+     * @memberof Sunshade
+     */
+    const handleBooking = (): false | void => props.available &amp;&amp; props.handleBooking()
+
+    return (
+        &lt;div style={containerStyle} onClick={handleBooking} aria-describedby="sunshade image">
+            {
+                !props.available &amp;&amp;
+                &lt;img
+                    width={width}
+                    height={height}
+                    src={denied} //Immagine dell'ombrellone non disponibile
+                    alt="denied"
+                />
+            }
+        &lt;/div>
+    )
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 18:26:01 GMT+0200 (Ora legale dell’Europa centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

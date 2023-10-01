@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>components/CustomModal.tsx - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AuthForm.html">AuthForm</a><ul class='methods'><li data-type='method'><a href="AuthForm.html#.isEmailValid">isEmailValid</a></li><li data-type='method'><a href="AuthForm.html#~isPasswordValid">isPasswordValid</a></li></ul></li><li><a href="AuthForm.AuthFormProps.html">AuthFormProps</a></li><li><a href="AuthProvider.html">AuthProvider</a><ul class='methods'><li data-type='method'><a href="AuthProvider.html#.navigateProtected">navigateProtected</a></li></ul></li><li><a href="AuthProvider.AuthContextType.html">AuthContextType</a></li><li><a href="AuthProvider.AuthProviderProps.html">AuthProviderProps</a></li><li><a href="AuthProvider.useAuth.html">useAuth</a></li><li><a href="Bookings.html">Bookings</a><ul class='methods'><li data-type='method'><a href="Bookings.html#.renderSunshades">renderSunshades</a></li><li data-type='method'><a href="Bookings.html#~handleClose">handleClose</a></li></ul></li><li><a href="BrowserRouter.html">BrowserRouter</a></li><li><a href="CheckoutTable.html">CheckoutTable</a></li><li><a href="CreateBooking.html">CreateBooking</a><ul class='methods'><li data-type='method'><a href="CreateBooking.html#.handleBooking">handleBooking</a></li><li data-type='method'><a href="CreateBooking.html#.handleClose">handleClose</a></li></ul></li><li><a href="CustomAppBar.html">CustomAppBar</a></li><li><a href="CustomAppBar.CustomAppBarProps.html">CustomAppBarProps</a></li><li><a href="CustomModal.html">CustomModal</a><ul class='methods'><li data-type='method'><a href="CustomModal.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="CustomModal.CustomModalProps.html">CustomModalProps</a></li><li><a href="CustomNumericField.html">CustomNumericField</a></li><li><a href="CustomThemeProvider.html">CustomThemeProvider</a></li><li><a href="ErrorPage.html">ErrorPage</a><ul class='methods'><li data-type='method'><a href="ErrorPage.html#.showErrorMessage">showErrorMessage</a></li></ul></li><li><a href="ErrorPage.ErrorPageProps.html">ErrorPageProps</a></li><li><a href="LandingPage.html">LandingPage</a><ul class='methods'><li data-type='method'><a href="LandingPage.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="Layout.html">Layout</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="Routes.html">Routes</a></li><li><a href="Routes.ProtectedRoutes.html">ProtectedRoutes</a></li><li><a href="Routes.PublicRoutes.html">PublicRoutes</a></li><li><a href="SendRequest.html">SendRequest</a></li><li><a href="SendRequest.GetSunshades.html">GetSunshades</a></li><li><a href="SendRequest.InsertBooking.html">InsertBooking</a></li><li><a href="SendRequest.SendRequestProps.html">SendRequestProps</a></li><li><a href="Sunshade.html">Sunshade</a><ul class='methods'><li data-type='method'><a href="Sunshade.html#.handleBooking">handleBooking</a></li></ul></li><li><a href="Sunshade.SunshadeProps.html">SunshadeProps</a></li><li><a href="Sunshade.SunshadeType.html">SunshadeType</a></li><li><a href="flexStyle.html">flexStyle</a></li><li><a href="flexStyle.flexColumnStyle.html">flexColumnStyle</a></li><li><a href="flexStyle.flexRowStyle.html">flexRowStyle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#CustomSnackbar">CustomSnackbar</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">components/CustomModal.tsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Box, Modal } from "@mui/material"
+import { ReactNode, JSX } from "react"
+
+const boxStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4
+}
+
+/**
+ * @description
+ * Props del modal personalizzato
+ * @namespace CustomModal.CustomModalProps
+ */
+interface CustomModalProps {
+    open: boolean,
+    setOpen: (open: boolean) => void,
+    children: ReactNode | ReactNode[]
+}
+
+/**
+ * @namespace CustomModal
+ * @description
+ * Visualizza un modal personalizzato (MUI) \
+ * Il modal contiene un contenuto personalizzabile.
+ * @example
+ * &lt;CustomModal open={true} setOpen={setOpen}>
+ *     &lt;h1>Titolo&lt;/h1>
+ *     &lt;p>Contenuto&lt;/p>
+ * &lt;/CustomModal>
+ * @see https://mui.com/components/modal/
+ * @param {CustomModal.CustomModalProps} props Il contenuto del modal e la funzione per chiuderlo
+ * @returns {JSX.Element} Il modal personalizzato
+ */
+export const CustomModal = (props: CustomModalProps): JSX.Element => {
+
+    /**
+     * @description
+     * Se il modal è aperto, lo chiude. \
+     * Altrimenti lo apre.
+     * @example
+     * &lt;Button onClick={toggleModal}>Apri o chiudi il modal&lt;/Button>
+     * @returns {void}
+     * @memberof CustomModal
+     */
+    const toggleModal = (): void => {
+        props.setOpen(!props.open)
+    }
+
+    return (
+        &lt;Modal
+            open={props.open}
+            onClose={toggleModal}
+            keepMounted
+        >
+            &lt;Box sx={boxStyle}>
+                {props.children}
+            &lt;/Box>
+        &lt;/Modal>
+    )
+}
+
+export default CustomModal</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 18:26:01 GMT+0200 (Ora legale dell’Europa centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

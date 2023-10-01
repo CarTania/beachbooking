@@ -1,0 +1,41 @@
+/*
+    Stile per il background dell'intera LandingPage
+*/
+.sandbg {
+    background-image: url("https://images.unsplash.com/photo-1534171472159-edb6d1e0b63c");
+    background-size: cover;
+}
+
+/*
+    Stile per l'animazione del mare (posizionata davanti al background)
+*/
+.gradientbg {
+    background: linear-gradient(-45deg, #f19d53c4, #fff, #27899c);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+    opacity: 0.9;
+}
+
+/*
+    Stile per l'animazione del mare (posizionata davanti al background)
+*/
+@keyframes gradient {
+    0% {
+        background-position: 0% 70%;
+    }
+
+    50% {
+        background-position: 90% 50%;
+    }
+
+    100% {
+        background-position: 0% 30%;
+    }
+}
+
+.cardStyle {
+    padding: 1rem;
+    border-radius: 2rem;
+    backdrop-filter: blur(10px);
+}

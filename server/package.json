@@ -1,0 +1,38 @@
+{
+  "name": "beachbookingserver",
+  "version": "1.0.0",
+  "description": "A server that manages the authentication of the beach booking client",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "ts-node --esm index.ts",
+    "dev": "ts-node --esm index.ts",
+    "build": "tsc",
+    "lint": "eslint .",
+    "serve": "tsc && node dist/index.js"
+  },
+  "author": "Tania Cartechini",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "email-validator": "^2.0.4",
+    "jsonwebtoken": "^9.0.1",
+    "pg": "^8.11.2"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cookie-parser": "^1.4.4",
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/node": "^20.6.3",
+    "@types/pg": "^8.10.2",
+    "eslint": "^8.48.0",
+    "express": "^4.18.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  }
+}

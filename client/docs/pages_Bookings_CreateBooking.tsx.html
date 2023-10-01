@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>pages/Bookings/CreateBooking.tsx - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="AuthForm.html">AuthForm</a><ul class='methods'><li data-type='method'><a href="AuthForm.html#.isEmailValid">isEmailValid</a></li><li data-type='method'><a href="AuthForm.html#~isPasswordValid">isPasswordValid</a></li></ul></li><li><a href="AuthForm.AuthFormProps.html">AuthFormProps</a></li><li><a href="AuthProvider.html">AuthProvider</a><ul class='methods'><li data-type='method'><a href="AuthProvider.html#.navigateProtected">navigateProtected</a></li></ul></li><li><a href="AuthProvider.AuthContextType.html">AuthContextType</a></li><li><a href="AuthProvider.AuthProviderProps.html">AuthProviderProps</a></li><li><a href="AuthProvider.useAuth.html">useAuth</a></li><li><a href="Bookings.html">Bookings</a><ul class='methods'><li data-type='method'><a href="Bookings.html#.renderSunshades">renderSunshades</a></li><li data-type='method'><a href="Bookings.html#~handleClose">handleClose</a></li></ul></li><li><a href="BrowserRouter.html">BrowserRouter</a></li><li><a href="CheckoutTable.html">CheckoutTable</a></li><li><a href="CreateBooking.html">CreateBooking</a><ul class='methods'><li data-type='method'><a href="CreateBooking.html#.handleBooking">handleBooking</a></li><li data-type='method'><a href="CreateBooking.html#.handleClose">handleClose</a></li></ul></li><li><a href="CustomAppBar.html">CustomAppBar</a></li><li><a href="CustomAppBar.CustomAppBarProps.html">CustomAppBarProps</a></li><li><a href="CustomModal.html">CustomModal</a><ul class='methods'><li data-type='method'><a href="CustomModal.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="CustomModal.CustomModalProps.html">CustomModalProps</a></li><li><a href="CustomNumericField.html">CustomNumericField</a></li><li><a href="CustomThemeProvider.html">CustomThemeProvider</a></li><li><a href="ErrorPage.html">ErrorPage</a><ul class='methods'><li data-type='method'><a href="ErrorPage.html#.showErrorMessage">showErrorMessage</a></li></ul></li><li><a href="ErrorPage.ErrorPageProps.html">ErrorPageProps</a></li><li><a href="LandingPage.html">LandingPage</a><ul class='methods'><li data-type='method'><a href="LandingPage.html#.toggleModal">toggleModal</a></li></ul></li><li><a href="Layout.html">Layout</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="Routes.html">Routes</a></li><li><a href="Routes.ProtectedRoutes.html">ProtectedRoutes</a></li><li><a href="Routes.PublicRoutes.html">PublicRoutes</a></li><li><a href="SendRequest.html">SendRequest</a></li><li><a href="SendRequest.GetSunshades.html">GetSunshades</a></li><li><a href="SendRequest.InsertBooking.html">InsertBooking</a></li><li><a href="SendRequest.SendRequestProps.html">SendRequestProps</a></li><li><a href="Sunshade.html">Sunshade</a><ul class='methods'><li data-type='method'><a href="Sunshade.html#.handleBooking">handleBooking</a></li></ul></li><li><a href="Sunshade.SunshadeProps.html">SunshadeProps</a></li><li><a href="Sunshade.SunshadeType.html">SunshadeType</a></li><li><a href="flexStyle.html">flexStyle</a></li><li><a href="flexStyle.flexColumnStyle.html">flexColumnStyle</a></li><li><a href="flexStyle.flexRowStyle.html">flexRowStyle</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AuthContext">AuthContext</a></li><li><a href="global.html#CustomSnackbar">CustomSnackbar</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">pages/Bookings/CreateBooking.tsx</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Breadcrumbs, Link, Button, Card, CardActions, CardContent, CardHeader, Typography, Box, CircularProgress } from '@mui/material'
+import { CSSProperties, useEffect, useState } from 'react'
+
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+
+import { flexColumnStyle, flexRowStyle } from '../../components/utils/CustomStyles'
+import { useLocation, useNavigate } from 'react-router-dom'
+
+import CustomNumericField from '../../components/CustomNumericField'
+
+import { InsertBooking } from '../../components/helpers/Api'
+
+import { SunshadeType } from './Sunshade'
+import { CheckoutTable } from '../../components/utils/CheckoutTable'
+import { CustomSnackbar, SnackbarInfoType } from '../../components/CustomSnackbar'
+
+const cardContentStyle: CSSProperties = {
+    display: 'inline-block'
+}
+
+const containerStyle: CSSProperties = {
+    ...flexColumnStyle,
+    padding: '2.5rem'
+}
+
+const formColumnStyle: CSSProperties = {
+    ...flexColumnStyle,
+    justifyContent: 'space-between',
+    gap: '2rem'
+}
+
+const addDays = (date: Date, days: number) => {
+    const result = new Date(date)
+    result.setDate(result.getDate() + days)
+    return result
+}
+
+/**
+ * @description
+ * Visualizza un form per creare una prenotazione \
+ * Utilizza la funzione {@link SendRequest.InsertBooking | InsertBooking} per inserire la prenotazione nel database
+ *  
+ * Il form contiene: 
+ * - un {@link https://mui.com/x/react-date-pickers/date-picker/ | calendario} per selezionare la data di inizio e di fine
+ * - un {@link CustomNumericField | campo numerico} per selezionare il numero di sdraio e lettini 
+ * - una {@link CheckoutTable | tabella di checkout} per visualizzare il riepilogo della prenotazione
+ * @returns {JSX.Element} Il form per creare una prenotazione
+ * @namespace CreateBooking
+ */
+export const CreateBooking = (): JSX.Element => {
+
+    const [startDate, setStartDate] = useState&lt;Date>(new Date(Date.now()))
+    const [endDate, setEndDate] = useState&lt;Date>(new Date(addDays(startDate!, 1)))
+    const numDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24))
+
+    //Bookings.tsx --> CreateBooking.tsx
+    //I dati trasferiti attraverso la funzione navigate() sono contenuti in state
+    const location = useLocation()
+    const state = location.state as SunshadeType
+
+    const [open, setOpen] = useState&lt;boolean>(false)
+
+    const [sunshade, setSunshade] = useState&lt;SunshadeType>()
+
+    const navigate = useNavigate()
+
+    const snackbarInfo: SnackbarInfoType = {
+        message: "Prenotazione creata con successo",
+        severity: "success"
+    }
+
+    /**
+     * @description
+     * Inserisce la prenotazione nel database utilizzando la funzione {@link SendRequest.InsertBooking |} \
+     * Se la prenotazione è stata inserita correttamente, viene visualizzato un messaggio di successo
+     * @see https://mui.com/components/breadcrumbs/
+     * @returns {void} 
+     * @memberof CreateBooking
+     */
+    const handleBooking = (): void => {
+        InsertBooking(sunshade!, startDate, endDate)
+            .then((ok) => {
+                //Se lo status è OK (200-299) allora la prenotazione è stata inserita con successo
+                if (ok) {
+                    setOpen(true) //visulizzo la snackbar.
+                }
+            })
+    }
+
+    /**
+     * @description
+     * Chiude il messaggio di successo e reindirizza alla pagina di visualizzazione delle prenotazioni
+     * @returns {void}
+     * @memberof CreateBooking
+     */
+    const handleClose = (): void => {
+        setOpen(false)
+        navigate('/visualizza-prenotazioni')
+    }
+
+    useEffect(() => {
+        if (state) {
+            setSunshade(state)
+        } else {
+            navigate('/visualizza-prenotazioni')
+        }
+    }, [state, navigate]) //se state cambia, viene eseguito il codice
+
+    return (
+        &lt;div style={containerStyle}>
+            {/* Breadcrumbs: Home / Crea prenotazione */}
+            &lt;Box sx={{ ...flexRowStyle, width: "100vw", float: "left", textAlign: "left", justifyContent: "flex-start" }}>
+                &lt;Breadcrumbs aria-label="breadcrumb" sx={{ paddingLeft: 5 }}>
+                    &lt;Link underline="hover" color="inherit" href="/visualizza-prenotazioni">
+                        Home
+                    &lt;/Link>
+                    &lt;Typography color="text.primary">Crea prenotazione&lt;/Typography>
+                &lt;/Breadcrumbs>
+            &lt;/Box>
+            &lt;Box sx={flexRowStyle}>
+                &lt;Card sx={flexColumnStyle}>
+                    &lt;CardHeader title={'Prenota un ombrellone'} />
+                    &lt;CardContent style={cardContentStyle}>
+                        &lt;LocalizationProvider dateAdapter={AdapterDateFns}>
+                            &lt;div style={formColumnStyle}>
+                                {
+                                    //conditional rendering: se sunshade è definito, visualizza i campi per creare la prenotazione
+                                    sunshade ? (
+                                        &lt;>
+                                            &lt;CustomNumericField
+                                                label="Numero di righe"
+                                                value={sunshade!.num_row}
+                                                onChange={(e) => setSunshade({ ...sunshade!, num_row: Number.parseInt(e.target.value) })}
+                                                minValue={1}
+                                                disabled={true}
+                                            />
+                                            &lt;CustomNumericField
+                                                label="Numero di colonne"
+                                                value={sunshade!.num_column}
+                                                onChange={(e) => setSunshade({ ...sunshade!, num_column: Number.parseInt(e.target.value) })}
+                                                minValue={1}
+                                                disabled={true}
+                                            />
+                                            {/*
+                                                Utilizzo il componente Date Picker anche se il Date Range Picker sarebbe stata un'opzione migliore.
+                                                In quanto più appropriato, sfortunatamente è incluso solo nel piano pro.
+                                            */}
+                                            &lt;div style={flexRowStyle}>
+                                                &lt;DatePicker
+                                                    label="Data di inizio"
+                                                    value={startDate}
+                                                    disablePast
+                                                    onChange={(newDate) => setStartDate(newDate!)}
+                                                    format="dd/MM/yyyy"
+                                                />
+                                                &lt;Typography> - &lt;/Typography>
+                                                &lt;DatePicker
+                                                    label="Data di fine"
+                                                    value={endDate}
+                                                    disableHighlightToday
+                                                    shouldDisableDate={(date) => date.getTime() &lt;= startDate.getTime()}
+                                                    onChange={(newDate) => setEndDate(newDate!)}
+                                                    format="dd/MM/yyyy"
+                                                />
+                                            &lt;/div>
+                                            &lt;CustomNumericField
+                                                label="Numero di sdraio"
+                                                value={sunshade!.num_deckchairs}
+                                                onChange={(e) => setSunshade({ ...sunshade!, num_deckchairs: Number.parseInt(e.target.value) })}
+                                                minValue={0}
+                                            />
+                                            &lt;CustomNumericField
+                                                label="Numero di lettini"
+                                                value={sunshade!.num_sunbeds}
+                                                onChange={(e) => setSunshade({ ...sunshade!, num_sunbeds: Number.parseInt(e.target.value) })}
+                                                minValue={0}
+                                            />
+                                            &lt;CheckoutTable
+                                                sunshade={sunshade}
+                                                numDays={numDays}
+                                            />
+                                        &lt;/>
+                                    ) : (
+                                        &lt;CircularProgress />
+                                    )
+                                }
+                            &lt;/div>
+                        &lt;/LocalizationProvider>
+                    &lt;/CardContent>
+                    &lt;CardActions style={containerStyle}>
+                        &lt;Box sx={flexRowStyle}>
+                            &lt;Button
+                                variant="contained"
+                                color="error"
+                                style={{ width: "30%", borderRadius: "25px" }}
+                                onClick={() => navigate('/visualizza-prenotazioni')}
+                            >
+                                Annulla
+                            &lt;/Button>
+                            &lt;Button
+                                variant="contained"
+                                color="primary"
+                                style={{ width: "70%", borderRadius: "25px" }}
+                                onClick={() => handleBooking()}
+                            >
+                                Crea prenotazione
+                            &lt;/Button>
+                        &lt;/Box>
+                        &lt;CustomSnackbar
+                            open={open}
+                            setOpen={setOpen}
+                            handleClose={handleClose}
+                            snackbarInfo={snackbarInfo}
+                        />
+                    &lt;/CardActions>
+                &lt;/Card>
+            &lt;/Box>
+        &lt;/div>
+    )
+}
+
+export default CreateBooking</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Sat Sep 23 2023 18:26:01 GMT+0200 (Ora legale dell’Europa centrale) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
