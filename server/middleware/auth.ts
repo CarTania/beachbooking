@@ -46,7 +46,7 @@ export const authenticateToken = (req: IGetUserAuthInfoRequest, res: Response, n
         //Aggiunge l'utente alla richiesta (req.user = access_token)
         req.user = user;
 
-        next();
+        next(); //passa la richiesta aggiornata al server. (con l'access token)
     });
 };
 

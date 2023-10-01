@@ -97,7 +97,7 @@ app.post('/api/auth', async (req: Request, res: Response) => {
 
         const access_token = generateAccessToken(email);
 
-        res.cookie('access_token', access_token).sendStatus(200);
+        res.cookie('access_token', access_token).sendStatus(200); //invia solo l'access token. 
 
     } catch (error) {
         console.error(error);
