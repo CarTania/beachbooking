@@ -1,4 +1,4 @@
-# **Relazione Sito Web Chalet** (link al [docx](https://github.com/CarTania/beachbooking/blob/a7a69f501c57af46fd6704ec8f52e8d3a4adec58/Relazione%20sito%20web%20-%20chalet.docx))
+# **Relazione Sito Web Chalet** (link al [docx](https://github.com/CarTania/beachbooking/raw/a7a69f501c57af46fd6704ec8f52e8d3a4adec58/Relazione%20sito%20web%20-%20chalet.docx))
 
 Questo documento fornisce una relazione dettagliata riguardo a un servizio di prenotazione di ombrelloni da spiaggia per uno chalet. L’obiettivo principale è stato quello di sviluppare un sito web che consenta agli utenti di registrarsi e prenotare il loro ombrellone.
 
