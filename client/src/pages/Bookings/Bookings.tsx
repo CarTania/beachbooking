@@ -31,7 +31,7 @@ export const Bookings = (): JSX.Element => {
     //context hook per l'autenticazione
     const auth = useAuth()
 
-    //Snackbar stato di apertura/chiusura
+    //Snackbar stato di apertura(true)/chiusura(false)
     const [open, setOpen] = useState<boolean>(false)
 
     const [snackbarInfo, setSnackbarInfo] = useState<SnackbarInfoType>({
@@ -42,7 +42,7 @@ export const Bookings = (): JSX.Element => {
     const GetSortedSunshades = () => {
         GetSunshades()
             .then((res) => {
-                //Ordina gli ombrelloni per fila e colonna
+                //Ordina gli ombrelloni per fila (decrescente) e colonna (crescente).
                 res.sort((a, b) => {
                     return b.num_row === a.num_row
                         ? a.num_column - b.num_column
@@ -79,7 +79,7 @@ export const Bookings = (): JSX.Element => {
 
     /**
      * @description
-     * Chiude il messaggio di successo o errore della snackbar e visualizza nuovamente la lista di ombrelloni aggiornata
+     * Chiude il messaggio di successo o errore della snackbar.
      * @returns {void}
      */
     const handleClose = (): void => {
