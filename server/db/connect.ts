@@ -114,10 +114,10 @@ export const getUserByEmail = async (email: string): Promise<any | undefined> =>
     try {
         //SQL Injection protection by using prepared statements
         //es. SQL Injection: (vulnerable to SQL injection)
-        return (await client.query("SELECT * FROM Users WHERE email = '" + email + "'")).rows[0]
+        //return (await client.query("SELECT * FROM Users WHERE email = '" + email + "'")).rows[0]
         //body: { email: "a' OR '1' = '1" }
         //SQL query: SELECT * FROM Users WHERE email = 'a' OR '1' = '1'
-        //return (await client.query("SELECT * FROM Users WHERE email = $1", [email])).rows[0]
+        return (await client.query("SELECT * FROM Users WHERE email = $1", [email])).rows[0]
     } catch (err: any) {
         console.log(err.stack)
     }

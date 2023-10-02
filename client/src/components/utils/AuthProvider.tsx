@@ -63,7 +63,8 @@ export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
 
     /**
      * @description
-     * Gestisce il login dell'utente e restituisce un booleano
+     * Gestisce il login dell'utente e restituisce un booleano.
+     * La funzione non restituisce un risultato in Json. 
      * @param {string} email L'email dell'utente
      * @param {string} password La password dell'utente
      * @returns {Promise<boolean>} true se il login è andato a buon fine, altrimenti false

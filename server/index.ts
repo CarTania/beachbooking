@@ -89,7 +89,7 @@ app.post('/api/auth', async (req: Request, res: Response) => {
             const isPasswordCorrect = await comparePasswd(password, user.password);
 
             if (!isPasswordCorrect) {
-                return res.status(403).send({ message: 'Wrong password' });
+                return res.status(403).send({ message: 'Wrong password' }); //403 --> forbidden 
             }
         } else {
             await createUser(email, await hashPasswd(password));
@@ -116,13 +116,13 @@ app.post('/api/protected', authenticateToken, (req: Request, res: Response) => {
 /**
  * @description 
  * Effettua il logout dell'utente, se loggato, cancellando il cookie.
- * Altrimenti, ritorna 500.
+ * Altrimenti, ritorna 405.
  * @returns {void}
  */
 app.post('/api/logout', async (req: Request, res) => {
 
     if (!req.cookies.access_token) {
-        return res.status(500).send({ message: "The user is not logged in" })
+        return res.status(405).send({ message: "The user is not logged in" }) //405--> metodo non permesso perchè non ho l'access token. 
     }
 
     res

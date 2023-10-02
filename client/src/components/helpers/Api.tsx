@@ -89,6 +89,13 @@ export const InsertBooking = async (sunshade: SunshadeType, startDate: Date, end
     })
 }
 
+/**
+ *  @description
+ * Cancella una prenotazione dato l'ombrellone. \
+ * @param sunshade 
+ * @returns 
+ */
+
 export const DeleteBooking = async (sunshade: SunshadeType): Promise<any> => {
     return await SendRequest({
         url: '/api/booking',
@@ -104,6 +111,13 @@ export const DeleteBooking = async (sunshade: SunshadeType): Promise<any> => {
         returnJSON: false
     })
 }
+
+/**
+ * @description
+ * Controlla se l'utente è proprietario dell'ombrellone. \
+ * @param sunshade 
+ * @returns 
+ */
 
 export const amISunshadeOwner = async (sunshade: SunshadeType): Promise<any> => {
     return await SendRequest({
