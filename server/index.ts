@@ -26,6 +26,7 @@ const corsOptions = {
 }
 
 //Il cors permette di fare richieste dai domini autorizzati
+//cors --> blocco le richieste direttamente dal server. 
 app.use(cors(corsOptions))
 //Il JSON permette di parsare il body delle richieste in formato JSON
 app.use(json())
@@ -89,7 +90,7 @@ app.post('/api/auth', async (req: Request, res: Response) => {
         console.log("sql injection: " + user.email + " " + user.password); //es. SQL Injection: (vulnerable to SQL injection)
 
         if (user) {
-            const isPasswordCorrect = await comparePasswd(password, user.password);
+            const isPasswordCorrect = await comparePasswd(password, user.password); //controllo se la password è corretta e la confronto. 
 
             if (!isPasswordCorrect) {
                 return res.status(403).send({ message: 'Wrong password' }); //403 --> forbidden 
