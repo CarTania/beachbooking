@@ -56,6 +56,7 @@ export const LandingPage = (): JSX.Element => {
     const toggleModal = (): void => {
 
         //Access token dell'utente (se presente)
+        //Access token lo prende dai cookie. 
         const access_token = auth.cookies.get("access_token")
 
         if (access_token) {
