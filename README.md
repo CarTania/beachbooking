@@ -1,7 +1,7 @@
 # **Relazione Sito Web Chalet** (link al [docx](https://github.com/CarTania/beachbooking/raw/main/Relazione%20sito%20web%20-%20chalet.docx))
 
 Questo documento fornisce una relazione dettagliata riguardo a un servizio di prenotazione di ombrelloni da spiaggia per uno chalet. L’obiettivo principale è stato quello di sviluppare un sito web che consenta agli utenti di registrarsi e prenotare il loro ombrellone.
-La mia applicazione è una Single Page Application. 
+La mia applicazione è di tipo Single Page Application. 
 
 ## **Struttura del Sito**
 
