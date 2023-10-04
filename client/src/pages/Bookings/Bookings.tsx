@@ -42,7 +42,10 @@ export const Bookings = (): JSX.Element => {
     const GetSortedSunshades = () => {
         GetSunshades()
             .then((res) => {
-                //Ordina gli ombrelloni per fila (decrescente) e colonna (crescente).
+                //Ordina gli ombrelloni per riga (decrescente) e colonna (crescente).
+                //Utilizza la funzione "sort" di Javascript
+                //Se gli ombrelloni sono sulla stessa fila, allora li ordina per colonna (crescente)
+                //altrimenti li mette in ordine decrescente per riga. 
                 res.sort((a, b) => {
                     return b.num_row === a.num_row
                         ? a.num_column - b.num_column
@@ -132,7 +135,7 @@ export const Bookings = (): JSX.Element => {
 
         /**
          * @description
-         * Ritorna la lista di ombrelloni [è obbligatorio utilizzare una chiave univoca per la funzione map]
+         * Ritorna la lista di ombrelloni [bisogna utilizzare una chiave univoca per la funzione map]
          */
         return sunshades.map((sunshade) => (
             <Tooltip sx={flexRowStyle} key={sunshade.sunshade_id} title={renderTooltipTitle(sunshade)} placement="bottom">

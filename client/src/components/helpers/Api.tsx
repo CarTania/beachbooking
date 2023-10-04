@@ -21,6 +21,7 @@ interface SendRequestProps {
  * Se {@link returnJSON} (flag booleano) è true, restituisce la risposta in formato JSON. \
  * Altrimenti, restituisce solo un flag che indica se la richiesta è andata a buon fine (status 200-299). \
  * Se credentials è true, invia anche il cookie access_token.
+ * fetch è una funzione che consente di inviare richieste al server. 
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
  * @param {SendRequest.SendRequestProps} props I parametri della richiesta
  * @returns {Promise<any>} La risposta del server

@@ -59,7 +59,7 @@ interface AuthProviderProps {
 export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
 
     //Accede ai cookie inviati dal server
-    const cookies = new Cookies({ path: '/' }, { secure: true })
+    const cookies = new Cookies({ path: '/' });
 
     /**
      * @description
@@ -70,9 +70,10 @@ export const AuthProvider = (props: AuthProviderProps): JSX.Element => {
      * @returns {Promise<boolean>} true se il login è andato a buon fine, altrimenti false
      * @memberof AuthProvider
      */
+
     const login = async (email: string, password: string): Promise<boolean> => {
         const res = await SendRequest({
-            url: '/api/auth',
+            url: '/api/auth',  //proxy --> vite.config.js
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

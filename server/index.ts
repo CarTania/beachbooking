@@ -1,3 +1,4 @@
+//Questo componente "index.ts" è il componente principale del server (applicazione express).
 import express, { json, Request, Response } from 'express'
 import cors from 'cors'
 import { amISunshadeOwner, createBooking, createUser, deleteBooking, getSunshades, getUserByEmail } from './db/connect.js'

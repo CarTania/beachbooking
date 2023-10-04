@@ -59,7 +59,8 @@ export const AuthForm = (props: AuthFormProps): JSX.Element => {
 
     /**
      * @description
-     * Controlla se l'email è valida utilizzando una regex in base allo standard RFC 5322.
+     * Controlla se l'email è valida utilizzando una regex in base allo standard RFC 5322 perchè altrimenti
+     * un maleintenzionato potrebbe inserire un sql injection o xss.
      * @see https://datatracker.ietf.org/doc/html/rfc5322
      * @param {string} email l'email da controllare
      * @returns {boolean} true se l'email è valida, altrimenti false

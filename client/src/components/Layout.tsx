@@ -20,6 +20,12 @@ import { CustomAppBar } from './CustomAppBar'
  * @see https://reactrouter.com/en/components/outlet
  * @returns {JSX.Element} il layout dell'applicazione
  * @namespace Layout
+ *
+ *CustomThemeProvider --> imposta il tema dell'applicazione. 
+ *AuthProvider --> contiene il context provider per l'auth.
+ *ProtectedRoute --> verifica se l'utente è loggato.
+ *CustomAppBar --> AppBar di MUI personalizzato. 
+ *Outlet --> componente figlio della route. 
  */
 export const Layout = (props: { isRouteProtected: boolean }): JSX.Element => {
     return (

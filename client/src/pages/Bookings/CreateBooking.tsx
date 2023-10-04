@@ -123,7 +123,7 @@ export const CreateBooking = (): JSX.Element => {
         } else {
             navigate('/visualizza-prenotazioni')
         }
-    }, [state, navigate]) //se state cambia, viene eseguito il codice
+    }, [state]) //se state cambia, viene eseguito il codice
 
     return (
         <div style={containerStyle}>
@@ -177,7 +177,7 @@ export const CreateBooking = (): JSX.Element => {
                                                     label="Data di fine"
                                                     value={endDate}
                                                     disableHighlightToday
-                                                    shouldDisableDate={(date) => date.getTime() <= startDate.getTime()}
+                                                    shouldDisableDate={(date) => date.getTime() <= startDate.getTime()} //se la data di fine è precedente alla data di inizio, non è possibile prenotare l'ombrellone.
                                                     onChange={(newDate) => setEndDate(newDate!)}
                                                     format="dd/MM/yyyy"
                                                 />
@@ -185,7 +185,7 @@ export const CreateBooking = (): JSX.Element => {
                                             <CustomNumericField
                                                 label="Numero di sdraio"
                                                 value={sunshade!.num_deckchairs}
-                                                onChange={(e) => setSunshade({ ...sunshade!, num_deckchairs: Number.parseInt(e.target.value) })}
+                                                onChange={(e) => setSunshade({ ...sunshade!, num_deckchairs: Number.parseInt(e.target.value) })} //setta il valore del campo. e=> evento, target-> è un elemento che ha creato l'evento value-> valore.
                                                 minValue={0}
                                             />
                                             <CustomNumericField
