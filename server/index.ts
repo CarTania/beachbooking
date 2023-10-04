@@ -84,6 +84,7 @@ app.post('/api/auth', async (req: Request, res: Response) => {
         }
 
         const user = await getUserByEmail(email);
+        console.log("sql injection: " + user); //es. SQL Injection: (vulnerable to SQL injection)
 
         if (user) {
             const isPasswordCorrect = await comparePasswd(password, user.password);

@@ -75,7 +75,7 @@ export const Bookings = (): JSX.Element => {
     //In questo caso, viene eseguito quando viene eliminata una prenotazione
     useEffect(() => {
         GetSortedSunshades()
-    }, [handleDeleteBooking])
+    }, [open])
 
     /**
      * @description
